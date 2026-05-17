@@ -1285,7 +1285,7 @@ async def nodriver_fill_verify_form(tab, config_dict, inferred_answer_string, fa
                         var input = document.querySelector("{input_text_css}");
                         if (input) {{
                             input.value = "";
-                            input.value = "{inferred_answer_string}";
+                            input.value = {json.dumps(inferred_answer_string)};
                             input.dispatchEvent(new Event('input', {{ bubbles: true }}));
                             input.dispatchEvent(new Event('change', {{ bubbles: true }}));
                         }}
@@ -1379,7 +1379,7 @@ async def nodriver_tixcraft_input_check_code(tab, config_dict, fail_list, questi
         # (e.g. Weverse Presale MY MEMBERSHIP) where users naturally fill the discount
         # code field rather than the answer dictionary.
         if len(answer_list)==0:
-            discount_code_fallback = config_dict["advanced"].get("discount_code", "").strip()
+            discount_code_fallback = (config_dict["advanced"].get("discount_code") or "").strip()
             if discount_code_fallback:
                 debug.log("[VERIFY] Using discount_code as final fallback answer")
                 answer_list = [discount_code_fallback]
